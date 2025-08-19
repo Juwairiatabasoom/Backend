@@ -1,0 +1,31 @@
+from flask import Flask
+
+app = Flask(__name__)
+def make_bold(function):
+    def wrapper():
+        return '<b>'+function()+'</b>'
+    return wrapper
+
+def new_decorator(function):
+    def wrapper(*args,**kwargs):
+        if args[0].is_True==True:    #some random condition
+            function(args[0])
+    return wrapper
+
+@app.route('/<user>')
+def hello_world(user):
+    return f'<h1 style="text-align:center">HELLO {user}</h1>'\
+            '<p> Its an apple pie </p>'\
+        '<img src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExdWV2eWx6Nm44OWxzM3RpbHNnOGFrZHd4bTA4OHM3aGMyeWhkMmUyZSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IwAZ6dvvvaTtdI8SD5/giphy.gif"</img>'
+
+@app.route("/bye")
+@make_bold
+def bye():
+    return "byee"
+
+@app.route("/<user>")
+def greet(user):
+    return f"hello there {user},how are ya?"
+
+if __name__=="__main__":
+    app.run(debug=True)
